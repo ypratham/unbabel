@@ -5,16 +5,19 @@ interface AppState {
   targetLanguage: string;
   pipelineId: string;
   serviceId: string;
+  textToSpeechSourceLanguage: string;
 }
 
 interface AppStateActions {
   setSourceLanguage: (sourceLanguage: string) => void;
   setTargetLanguage: (targetLanguage: string) => void;
   updateServiceId: (id: string) => void;
+  setTextToSpeechSourceLanguage: (s: string) => void;
 }
 
 export const useAppStore = create<AppState & AppStateActions>()((set) => ({
   sourceLanguage: "en",
+  textToSpeechSourceLanguage: "",
   targetLanguage: "mr",
   pipelineId: "64392f96daac500b55c543cd",
   serviceId: "",
@@ -31,6 +34,11 @@ export const useAppStore = create<AppState & AppStateActions>()((set) => ({
   updateServiceId(id) {
     return set(() => ({
       serviceId: id,
+    }));
+  },
+  setTextToSpeechSourceLanguage(s) {
+    return set(() => ({
+      textToSpeechSourceLanguage: s,
     }));
   },
 }));

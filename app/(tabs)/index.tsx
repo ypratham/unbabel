@@ -13,7 +13,11 @@ import { useAppStore } from "store/appStore";
 import { Button, Text, YStack } from "tamagui";
 import * as FileSystem from "expo-file-system";
 
-import Voice from "@react-native-voice/voice";
+import Voice, {
+  SpeechRecognizedEvent,
+  SpeechResultsEvent,
+  SpeechErrorEvent,
+} from "@react-native-voice/voice";
 
 async function convertToBase64(uri) {
   const response = await fetch(uri);
@@ -133,17 +137,104 @@ export default function TabOneScreen() {
     }
   }
 
-  const [started, setStarted] = useState(false);
+  const [recognized, setRecognized] = useState("");
+  const [volume, setVolume] = useState("");
+  const [error, setError] = useState("");
+  const [end, setEnd] = useState("");
+  const [started, setStarted] = useState("");
   const [results, setResults] = useState([]);
   const [partialResults, setPartialResults] = useState([]);
-  const [pitch, setPitch] = useState(0);
 
-  const translateSpeechToSpeech = async () => {
+  const onSpeechStart = (e: any) => {
+    console.log("onSpeechStart: ", e);
+    setStarted("√");
+  };
+
+  const onSpeechRecognized = (e: SpeechRecognizedEvent) => {
+    console.log("onSpeechRecognized: ", e);
+    setRecognized("√");
+  };
+
+  const onSpeechEnd = (e: any) => {
+    console.log("onSpeechEnd: ", e);
+    setEnd("√");
+  };
+
+  const onSpeechError = (e: SpeechErrorEvent) => {
+    console.log("onSpeechError: ", e);
+    setError(JSON.stringify(e.error));
+  };
+
+  const onSpeechResults = (e: SpeechResultsEvent) => {
+    console.log("onSpeechResults: ", e);
+    setResults(e.value as any);
+
+    if (e.value) {
+      translateSpeechToSpeech(e.value[0]);
+    }
+  };
+
+  const onSpeechPartialResults = (e: SpeechResultsEvent) => {
+    console.log("onSpeechPartialResults: ", e);
+    setPartialResults(e.value as any);
+  };
+
+  const onSpeechVolumeChanged = (e: any) => {
+    // console.log("onSpeechVolumeChanged: ", e);
+    setVolume(e.value);
+  };
+
+  const _startRecognizing = async () => {
+    _clearState();
+    try {
+      await Voice.start("en-US");
+      console.log("called start");
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const _stopRecognizing = async () => {
+    try {
+      await Voice.stop();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const _cancelRecognizing = async () => {
+    try {
+      await Voice.cancel();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const _destroyRecognizer = async () => {
+    try {
+      await Voice.destroy();
+    } catch (e) {
+      console.error(e);
+    }
+    _clearState();
+  };
+
+  const _clearState = () => {
+    setRecognized("");
+    setVolume("");
+    setError("");
+    setEnd("");
+    setStarted("");
+    setResults([]);
+    setPartialResults([]);
+  };
+
+  const translateSpeechToSpeech = async (speechResult) => {
     const audioResponse = await processLanguagePipeline({
       audioContent: "",
       distLang: targetLanguage,
       srcLang: sourceLanguage,
-      inputSource: results[0],
+      inputSource: speechResult,
     });
 
     const soundObject = new Audio.Sound();
@@ -158,72 +249,22 @@ export default function TabOneScreen() {
   };
 
   useEffect(() => {
-    function onSpeechStart(e) {
-      console.log("onSpeechStart: ", e);
-      setStarted(true);
-    }
-    function onSpeechResults(e) {
-      console.log("onSpeechResults: ", e);
-      setResults(e.value);
-      translateSpeechToSpeech();
-    }
-    function onSpeechPartialResults(e) {
-      console.log("onSpeechPartialResults: ", e);
-      setPartialResults(e.value);
-    }
-    function onSpeechVolumeChanged(e) {
-      // console.log("onSpeechVolumeChanged: ", e);
-      setPitch(e.value);
-    }
-
-    function onSpeechEnd(e) {
-      console.log("onSpeechEnd: ", e);
-    }
-
     Voice.onSpeechStart = onSpeechStart;
+    Voice.onSpeechRecognized = onSpeechRecognized;
     Voice.onSpeechEnd = onSpeechEnd;
-    // Voice.onSpeechError = onSpeechError;
+    Voice.onSpeechError = onSpeechError;
     Voice.onSpeechResults = onSpeechResults;
     Voice.onSpeechPartialResults = onSpeechPartialResults;
     Voice.onSpeechVolumeChanged = onSpeechVolumeChanged;
+
     return () => {
       Voice.destroy().then(Voice.removeAllListeners);
     };
   }, []);
 
-  const startRecognizing = async () => {
-    try {
-      await Voice.start("en-IN");
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const cancelRecognizing = async () => {
-    //Cancels the speech recognition
-    try {
-      await Voice.cancel();
-    } catch (e) {
-      console.error(e);
-    }
-  };
-
-  const destroyRecognizer = async () => {
-    //Destroys the current SpeechRecognizer instance
-    try {
-      await Voice.destroy();
-    } catch (e) {
-      console.error(e);
-    }
-    setPitch(0);
-    setStarted(false);
-    setResults([]);
-    setPartialResults([]);
-  };
-
   return (
     <YStack f={1} ai="center" gap="$8" px="$10" pt="$5">
-      <Button onPress={started ? destroyRecognizer : startRecognizing}>
+      <Button onPress={started ? _destroyRecognizer : _startRecognizing}>
         {recording ? "Stop Recording" : "Start Recording"}
       </Button>
 
