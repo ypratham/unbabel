@@ -19,7 +19,7 @@ export default function TabLayout() {
           headerRight: () => (
             <Link href="/modal" asChild>
               <Button mr="$4" bg="$purple8" color="$purple12">
-                Hello!
+                Configure
               </Button>
             </Link>
           ),
