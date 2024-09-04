@@ -26,6 +26,12 @@ export const SUPPORTED_TARGET_LANGUAGE = [
     id: 140,
   },
   {
+    name: "English",
+    iso_code: "en",
+    iso_code2: "en-IN",
+    id: 139,
+  },
+  {
     name: "Marathi",
     iso_code: "mr",
     id: 141,

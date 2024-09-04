@@ -4436,12 +4436,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native-indicators@npm:^0":
+  version: 0.16.6
+  resolution: "@types/react-native-indicators@npm:0.16.6"
+  dependencies:
+    "@types/react": "npm:*"
+    react-native: "npm:*"
+  checksum: 7d25499968a0bff7efc9a6b30f55da1ff6d87c5f313bef30e142b96d1b81780f3406b790cb2c30dd284a73bb8b35f1db6fafea4bf77d8fef24e32279aac5acc8
+  languageName: node
+  linkType: hard
+
 "@types/react-native@npm:^0.73.0":
   version: 0.73.0
   resolution: "@types/react-native@npm:0.73.0"
   dependencies:
     react-native: "npm:*"
   checksum: a764ca5d876dae3c109da449f736c44271b3b236d0d6e836c078247af1419f6d851600c56bb0c26f3e0d1b4be6eaac56b65c1f74ad0f0d05baf8b65dd1d5c597
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:*":
+  version: 18.3.5
+  resolution: "@types/react@npm:18.3.5"
+  dependencies:
+    "@types/prop-types": "npm:*"
+    csstype: "npm:^3.0.2"
+  checksum: ba0477c5ad4a762157c6262a199af6ccf9e24576877a26a7f516d5a9ba35374a6ac7f8686a10e5e8030513214f02bcb66e8363e43905afb7cd313deaf673de05
   languageName: node
   linkType: hard
 
@@ -6679,6 +6699,15 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 2cec21d8def4e0cbc3e7aede4d4b9cef726d83060d703ad39302227e33d9f958b722d36f81addf2a783cbf6db1921e87abba32211ec8b993e7c0aac52224ac42
+  languageName: node
+  linkType: hard
+
+"expo-haptics@npm:~13.0.1":
+  version: 13.0.1
+  resolution: "expo-haptics@npm:13.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: 2ed8d292f89208b21fece50c2d21c4272833fd37cb769e382365a9502b844c33f582ceee374ad8d3c184cc75418ca9a6daf54005de281c0a952c7f2a39b026c9
   languageName: node
   linkType: hard
 
@@ -10196,7 +10225,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -10416,6 +10445,18 @@ __metadata:
   peerDependencies:
     react: ^16.6.0 || ^17.0.0 || ^18.0.0
   checksum: 217bd0eaa61d426a512634369c70c44ce8b92127ec626dc40c65b72b1be1534ed3ed00ba2dd1a9ad77d1716ce8fd1e6db3f7209534303a652d9932a962d2c830
+  languageName: node
+  linkType: hard
+
+"react-native-indicators@npm:^0.17.0":
+  version: 0.17.0
+  resolution: "react-native-indicators@npm:0.17.0"
+  dependencies:
+    prop-types: "npm:^15.5.10"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 85931fcc873f155e52412d7e0f768575ce00701870ebf873fa9fbe46e2c42f696577fd5a536fa7027f096fe090dd89470ddfe22d7b644df65c3973c6c2985c29
   languageName: node
   linkType: hard
 
@@ -12241,6 +12282,7 @@ __metadata:
     "@tamagui/toast": "npm:^1.108.4"
     "@types/react": "npm:~18.2.79"
     "@types/react-native": "npm:^0.73.0"
+    "@types/react-native-indicators": "npm:^0"
     axios: "npm:^1.7.5"
     babel-preset-expo: "npm:^11.0.6"
     bhashini-translation: "npm:^1.0.4"
@@ -12250,6 +12292,7 @@ __metadata:
     expo-dev-client: "npm:~4.0.23"
     expo-file-system: "npm:~17.0.1"
     expo-font: "npm:~12.0.6"
+    expo-haptics: "npm:~13.0.1"
     expo-linking: "npm:~6.3.1"
     expo-router: "npm:~3.5.15"
     expo-splash-screen: "npm:~0.27.4"
@@ -12260,6 +12303,7 @@ __metadata:
     react-dom: "npm:18.2.0"
     react-native: "npm:0.74.1"
     react-native-audio-record: "npm:^0.2.2"
+    react-native-indicators: "npm:^0.17.0"
     react-native-reanimated: "npm:~3.10.1"
     react-native-safe-area-context: "npm:4.10.1"
     react-native-screens: "npm:~3.31.1"
